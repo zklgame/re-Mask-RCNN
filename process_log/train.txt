@@ -1,0 +1,26 @@
+################################################
+0. DATASET and Config
+################################################
+1. subclass of Config
+2. subclass of Dataset
+
+################################################
+1. MODEL TRAIN
+################################################
+
+1. create model in 'training' mode
+2. (optional) load_weights
+
+3. model.train
+    3.1 data_generator
+        3.1.1 generate_pyramid_anchors
+        3.1.2 load_image_gt (one image per time)
+                1. resize image and resize mask accordingly
+                2. if use_mini_mask: resize mask to mini shape, keep bbox for resize back in inference
+                3. compose_image_meta
+                4. return resized_image, image_meta, class_ids, bbox of origin mask, (mini_)mask
+        3.1.3 build_rpn_targets
+                computer anchor match and positive deltas based on gt_bbox of origin mask
+        (TODO: 3.1.3.5 if random_rois)
+        3.1.4 build batch data and yield to feed
+
